@@ -16,21 +16,21 @@ def main():
 
 # Create an entry
 def create_timer_entry():
-    timer_entry_date = date.today()
-    timer_entry_title = input("Enter title: ")
-    timer_entry_start = input("Enter start time in 24hr [hh:mm] format e.g. 12:20: ")
-    timer_entry_end = input("Enter end time in 24hr [hh.mm] format e.g. 12:50: ")
+    entry_date = date.today()
+    entry_title = input("Enter title: ")
+    entry_start = input("Enter start time in 24hr [hh:mm] format e.g. 12:20: ")
+    entry_end = input("Enter end time in 24hr [hh.mm] format e.g. 12:50: ")
 
-    timer_entry_duration = datetime.strptime(timer_entry_end, "%H:%M") - datetime.strptime(timer_entry_start, "%H:%M")
+    entry_duration = datetime.strptime(entry_end, "%H:%M") - datetime.strptime(entry_start, "%H:%M")
 
-    print(f"This entry today {timer_entry_date} is about {timer_entry_title} in {timer_entry_duration} minutes")
-    save_timer_entry(timer_entry_date, timer_entry_title, timer_entry_start, timer_entry_end, timer_entry_duration)    
+    print(f"This entry today {entry_date} is about {entry_title} in {entry_duration} minutes")
+    save_timer_entry(entry_date, entry_title, entry_start, entry_end, entry_duration)    
 
 # Write an entry into csv & db table
-def save_timer_entry(entry_date, entry_title, entry_start, entry_end, entry_duration):
+def save_timer_entry(date, title, start, end, duration):
     with open('timer-entries.csv', 'a', newline='') as entries:
         entries_writer = csv.writer(entries, delimiter=",")
-        entries_writer.writerow([entry_date, entry_title, entry_start, entry_end, entry_duration])
+        entries_writer.writerow([date, title, start, end, duration])
 
     # Write entries to mySQL
     try:
@@ -54,9 +54,9 @@ def create_daily_report():
             if row[0] == report_date:
                 report_entries.append(row)
     
-    print(f"Your daily report for {report_date}")
-    print(report_entries)
-
-
+    print(f"***Your daily report for {report_date}:***")
+    for each in report_entries: 
+        print(each)
+        
 main()
 
