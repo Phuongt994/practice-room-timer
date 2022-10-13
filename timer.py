@@ -53,8 +53,6 @@ def create_daily_report():
         for row in entries_reader:
             if row[0] == report_date:
                 report_entries.append(row)
-            else:
-                continue
     
     print(f"Your daily report for {report_date}")
     print(report_entries)
